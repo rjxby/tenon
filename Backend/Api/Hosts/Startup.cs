@@ -25,7 +25,7 @@ namespace Tenon.Backend.Api.Hosts
 
             services.AddSwagger();
 
-            services.AddRepositoriesDependency();
+            services.AddRepositoriesDependency(Configuration);
 
             services.AddServicesDependency();
 

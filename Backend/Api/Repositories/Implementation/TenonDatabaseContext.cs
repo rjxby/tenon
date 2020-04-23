@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Tenon.Backend.Api.Repositories.Implementation.DataAccessObjects;
 
 namespace Tenon.Backend.Api.Repositories.Implementation
 {
@@ -7,9 +8,13 @@ namespace Tenon.Backend.Api.Repositories.Implementation
     {
         public TenonDatabaseContext(DbContextOptions<TenonDatabaseContext> options): base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public virtual DbSet<ImageRecord> Images { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

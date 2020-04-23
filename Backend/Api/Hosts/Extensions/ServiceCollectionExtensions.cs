@@ -1,5 +1,7 @@
 ﻿using System;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Tenon.Backend.Api.Repositories.Contracts;
@@ -16,9 +18,10 @@ namespace Tenon.Backend.Api.Hosts.Extensions
             serviceDescriptors.AddTransient<IImagesService, ImagesService>();
         }
 
-        public static void AddRepositoriesDependency(this IServiceCollection serviceDescriptors)
+        public static void AddRepositoriesDependency(this IServiceCollection serviceDescriptors, IConfiguration configuration)
         {
-            serviceDescriptors.AddDbContext<TenonDatabaseContext>();
+            serviceDescriptors.AddDbContext<TenonDatabaseContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString(nameof(TenonDatabaseContext))));
 
             serviceDescriptors.AddTransient<IImagesRepository, ImagesRepository>();
         }

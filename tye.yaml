@@ -1,0 +1,11 @@
+name: tenon
+services:
+- name: backend-api
+  project: Backend/Api/Hosts/Tenon.Backend.Api.Hosts.csproj
+  bindings:
+  - port: 7000
+- name: postgres
+  image: postgres:latest
+  env:
+  - name: POSTGRES_PASSWORD
+    value: Test123456!
