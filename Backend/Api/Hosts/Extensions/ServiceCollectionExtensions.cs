@@ -21,7 +21,7 @@ namespace Tenon.Backend.Api.Hosts.Extensions
         public static void AddRepositoriesDependency(this IServiceCollection serviceDescriptors, IConfiguration configuration)
         {
             serviceDescriptors.AddDbContext<TenonDatabaseContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString(nameof(TenonDatabaseContext))));
+                options.UseNpgsql(configuration.GetConnectionString("postgres-api")));
 
             serviceDescriptors.AddTransient<IImagesRepository, ImagesRepository>();
         }

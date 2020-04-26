@@ -14,6 +14,8 @@ namespace Tenon.Backend.Api.Repositories.Implementation
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

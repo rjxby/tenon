@@ -7,11 +7,14 @@ namespace Tenon.Backend.Api.Repositories.Implementation.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:PostgresExtension:uuid-ossp", ",,");
+
             migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "NEWID()"),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "uuid_generate_v4()"),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

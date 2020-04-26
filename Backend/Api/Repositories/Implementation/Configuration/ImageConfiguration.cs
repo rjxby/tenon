@@ -12,7 +12,7 @@ namespace Tenon.Backend.Api.Repositories.Implementation.Configuration
 
             builder.HasKey(p => p.Id);
             builder.HasIndex(p => p.Id).IsUnique();
-            builder.Property(p => p.Id).HasDefaultValueSql("NEWID()");
+            builder.Property(p => p.Id).HasDefaultValueSql("uuid_generate_v4()");
 
             builder.Property(p => p.Name);
         }
