@@ -7,5 +7,7 @@ namespace Tenon.Backend.Api.Repositories.Contracts
     public interface IImagesRepository
     {
         Task<Image> GetAsync(Guid id);
+
+        Task<Image> CreateAsync(Image image);
     }
 }

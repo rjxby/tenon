@@ -8,7 +8,8 @@ namespace Tenon.Backend.Api.Hosts.MapperProfiles
     {
         public ImagesMapperProfile()
         {
-            CreateMap<Image, ImageModel>();
+            CreateMap<Image, ImageModel>().ReverseMap();
+            CreateMap<CreateImageModel, Image>();
         }
     }
 }

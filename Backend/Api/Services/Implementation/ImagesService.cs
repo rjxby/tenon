@@ -19,5 +19,10 @@ namespace Tenon.Backend.Api.Services.Implementation
         {
             return await _imagesRepository.GetAsync(id);
         }
+
+        public async Task<Image> CreateAsync(Image image)
+        {
+            return await _imagesRepository.CreateAsync(image);
+        }
     }
 }

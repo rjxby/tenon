@@ -7,5 +7,7 @@ namespace Tenon.Backend.Api.Services.Contracts
     public interface IImagesService
     {
         Task<Image> GetAsync(Guid id);
+
+        Task<Image> CreateAsync(Image image);
     }
 }

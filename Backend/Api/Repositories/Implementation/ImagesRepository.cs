@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Tenon.Backend.Api.Repositories.Contracts;
+using Tenon.Backend.Api.Repositories.Implementation.DataAccessObjects;
 using Tenon.Backend.Api.Services.Entities;
 
 namespace Tenon.Backend.Api.Repositories.Implementation
 {
     public class ImagesRepository : BaseRepository, IImagesRepository
     {
-        public ImagesRepository(TenonDatabaseContext context) : base(context)
+        private readonly IMapper _mapper;
+
+        public ImagesRepository(TenonDatabaseContext context, IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
 
         public async Task<Image> GetAsync(Guid id)
         {
-            return await Task.FromResult(new Image { Id = Guid.NewGuid(), Name = "Some name" });
+            var record = await _context.Images.FirstOrDefaultAsync(i => i.Id.Equals(id));
+            return _mapper.Map<Image>(record);
         }
 
         public async Task<Image> CreateAsync(Image image)
         {
-            return await CommitAsync(() => Task.FromResult(new Image { Id = Guid.NewGuid(), Name = image.Name }));
+            var record = _mapper.Map<ImageRecord>(image);
+            var entityEntry = await CommitAsync(async () => await _context.Images.AddAsync(record));
+            return _mapper.Map<Image>(entityEntry.Entity);
         }
     }
 }

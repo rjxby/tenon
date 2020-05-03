@@ -5,7 +5,7 @@ namespace Tenon.Backend.Api.Repositories.Implementation
 {
     public abstract class BaseRepository
     {
-        private readonly TenonDatabaseContext _context;
+        internal readonly TenonDatabaseContext _context;
 
         public BaseRepository(TenonDatabaseContext context)
         {

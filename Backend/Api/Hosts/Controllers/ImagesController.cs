@@ -2,10 +2,12 @@
 using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tenon.Backend.Api.Hosts.Models;
 using Tenon.Backend.Api.Services.Contracts;
+using Tenon.Backend.Api.Services.Entities;
 
 namespace Tenon.Backend.Api.Hosts.Controllers
 {
@@ -26,12 +28,25 @@ namespace Tenon.Backend.Api.Hosts.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [ActionName(nameof(GetAsync))]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ImageModel), 200)]
+        [ProducesResponseType(typeof(ImageModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             var img = await _imagesService.GetAsync(id);
             return Ok(_mapper.Map<ImageModel>(img));
+        }
+
+        [HttpPost]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ImageModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreatAsync(CreateImageModel model)
+        {
+            var imgForCreate = _mapper.Map<Image>(model);
+            var img = await _imagesService.CreateAsync(imgForCreate);
+            return CreatedAtAction(nameof(GetAsync), new { id = img.Id, }, _mapper.Map<ImageModel>(img));
         }
     }
 }
